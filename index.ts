@@ -51,12 +51,6 @@ function findVimeoLink(html: string): string[] {
   return matches || []
 }
 
-function findAllLinks(text: string): string[] {
-  const urlRegex = /https?:\/\/[^\s]+/g
-  const matches = text.match(urlRegex)
-  return matches || []
-}
-
 for (let i = 0; i < watchLinks.length; i++) {
   const link = watchLinks[i]
   const parts = link.split('/')

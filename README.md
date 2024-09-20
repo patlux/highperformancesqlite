@@ -1,4 +1,12 @@
-# highperformancesqlite
+# highperformancesqlite.com Download Script
+
+Downloads all videos from https://highperformancesqlite.com. I just don't like to be online while watching learning videos, so I can avoid to be interrupted.
+
+> Highly recommended course for sqlite!
+
+## Setup
+
+- For execution you will need to install [bun.sh](https://bun.sh/). Not tested with node.
 
 To install dependencies:
 
@@ -6,10 +14,32 @@ To install dependencies:
 bun install
 ```
 
-To run:
+Get your session token:
+
+1. Login https://highperformancesqlite.com/watch/introduction-to-this-course
+2. Open the inspector
+3. Open tab "Application"
+4. Copy the value of your `high_performance_sqlite_session` cookie under `Cookies`
+5.
+
+```sh
+cp .env.dist .env
+```
+
+6. Insert the cookie into `.env`
+
+## Start download
 
 ```bash
 bun run index.ts
 ```
 
-This project was created using `bun init` in bun v1.1.28. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+It will take some time.
+
+You will find all downloaded videos under `videos/`.
+
+## Notes
+
+- The downloaded videos are only prefixed by a number, but not grouped by sections as it is on the website.
+- The test data files are not downloaded
+- The Video transcript are not downloaded
