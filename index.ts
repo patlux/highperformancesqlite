@@ -2,6 +2,7 @@ import TurndownService from 'turndown'
 import he from 'he'
 import { $ } from 'bun'
 import fs from 'fs'
+import path from 'path'
 
 const fetchInit: RequestInit = {
   headers: {
@@ -56,15 +57,22 @@ function findAllLinks(text: string): string[] {
   return matches || []
 }
 
-for (const link of watchLinks) {
+for (let i = 0; i < watchLinks.length; i++) {
+  const link = watchLinks[i]
   const parts = link.split('/')
   const slug = parts[parts.length - 1]
 
-  console.log(`--- "${slug}" ---`)
+  const chapter = (i + 1).toString().padStart(2, '0')
+
+  console.log(`--- "${slug}" --- (${chapter}/${watchLinks.length})`)
+
+  const directory = 'videos'
+  await $`mkdir -p ${directory}`.quiet()
+  const fileName = path.join(directory, `${chapter}-${slug}.mp4`)
 
   try {
-    if (fs.existsSync(`${slug}.mp4`)) {
-      console.log(`${slug}.mp4 exists already. Skipping.`)
+    if (fs.existsSync(fileName)) {
+      console.log(`${fileName} exists already. Skipping.`)
       continue
     }
 
@@ -75,7 +83,7 @@ for (const link of watchLinks) {
 
     console.log(`Start downloading "${slug}"...`)
     // await spawn(['ffmpeg', '-i', vimeoLink, '-c', 'copy', '-bsf:a', 'aac_adtstoasc', `${slug}.mp4`])
-    await $`ffmpeg -i "${vimeoLink}" -c copy -bsf:a aac_adtstoasc ${slug}.mp4`.quiet()
+    await $`ffmpeg -i "${vimeoLink}" -c copy -bsf:a aac_adtstoasc ${fileName}`.quiet()
     console.log(`Finished "${slug}".`)
   } catch (error: unknown) {
     console.error(`Failed to download "${slug}": "${error}"`)
