@@ -4,6 +4,8 @@ Downloads all videos from https://highperformancesqlite.com. I just don't like t
 
 > Highly recommended course for sqlite!
 
+![Preview](https://github.com/user-attachments/assets/ed73fd9d-2f38-4a4f-9ad2-3c491c17d89f)
+
 ## Setup
 
 - For execution you will need to install [bun.sh](https://bun.sh/). Not tested with node.
